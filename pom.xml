@@ -33,6 +33,12 @@
 			<version>12.4.0.jre11</version>
 		</dependency>
 		<dependency>
+		    <groupId>com.microsoft.sqlserver</groupId>
+		    <artifactId>mssql-jdbc_auth</artifactId>
+		    <version>12.4.1.x64</version>
+		</dependency>
+				
+		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
