@@ -37,12 +37,15 @@ stages:
       inputs:
         command: build
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
-        repository: 'diegocairone/poc-crud-app-az:h2'
+        repository: 'diegocairone/poc-crud-app-az'
+        tags: 'h2'
+
     - task: Docker@2
       displayName: Push to DockerHub
       inputs:
         containerRegistry: 'my-dockerhub'
-        repository: 'diegocairone/poc-crud-app-az:h2'
+        repository: 'diegocairone/poc-crud-app-az'
+        tags: 'h2'
         command: 'push'
     - task: AzureRmWebAppDeployment@4
       inputs:
