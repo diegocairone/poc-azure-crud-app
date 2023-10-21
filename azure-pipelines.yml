@@ -30,6 +30,7 @@ stages:
       displayName: 'Maven Package'
       inputs:
         mavenPomFile: 'pom.xml'
+        jdkVersion: '1.17'
 
     - task: Docker@2
       displayName: Build an image
