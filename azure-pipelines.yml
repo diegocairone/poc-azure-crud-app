@@ -43,7 +43,7 @@ stages:
       displayName: Push to DockerHub
       inputs:
         containerRegistry: 'my-dockerhub'
-        repository: 'poc-crud-app-az'
+        repository: 'diegocairone/poc-crud-app-az'
         command: 'push'
     - task: AzureRmWebAppDeployment@4
       inputs:
