@@ -1,0 +1,50 @@
+# Docker
+# Build a Docker image
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+trigger:
+- main
+
+resources:
+- repo: self
+
+variables:
+  tag: '$(Build.BuildId)'
+  
+  # The name of your Docker Hub repository
+  dockerHubRepository: diegocairone/poc-crud-app-az
+
+  # The name of your Azure App Service
+  azureAppService: az-poc-app-api
+
+stages:
+- stage: Build
+  displayName: Build image
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: Docker@2
+      displayName: Build an image
+      inputs:
+        command: build
+        dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
+        tags: |
+          $(tag)
+    - task: Docker@2
+      displayName: Push to DockerHub
+      inputs:
+        containerRegistry: 'my-dockerhub'
+        repository: 'poc-crud-app-az'
+        command: 'push'
+    - task: AzureRmWebAppDeployment@4
+      inputs:
+        ConnectionType: 'AzureRM'
+        azureSubscription: 'Azure subscription 1 (ed9928c5-6223-4495-a9e5-934311a53ea4)'
+        appType: 'webAppContainer'
+        WebAppName: 'az-poc-app-api'
+        DockerNamespace: 'diegocairone'
+        DockerRepository: 'poc-crud-app-az'
+        DockerImageTag: '$(Build.BuildId)'
