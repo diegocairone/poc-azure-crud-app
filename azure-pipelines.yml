@@ -1,0 +1,61 @@
+# Docker
+# Build a Docker image
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+trigger:
+- main
+
+resources:
+- repo: self
+
+variables:
+  dockerNamespace: 'diegocairone'
+
+  imageRepo: 'poc-crud-app-az'
+  imageTag: 'h2'
+  
+  # The name of your Azure App Service
+  azureAppService: az-poc-app-api
+
+stages:
+- stage: Build
+  displayName: Build image
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: Maven@3
+      displayName: 'Maven Package'
+      inputs:
+        mavenPomFile: 'pom.xml'
+        jdkVersion: '1.17'
+
+    - task: Docker@2
+      displayName: Build an image
+      inputs:
+        command: build
+        dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
+        repository: '$(dockerNamespace)/$(imageRepo)'
+        tags: $(imageTag)
+
+    - task: Docker@2
+      displayName: Push to DockerHub
+      inputs:
+        containerRegistry: 'my-dockerhub'
+        repository: '$(dockerNamespace)/$(imageRepo)'
+        tags: $(imageTag)
+        command: 'push'
+        addPipelineData: false
+        addBaseImageData: false
+
+    - task: AzureRmWebAppDeployment@4
+      inputs:
+        ConnectionType: 'AzureRM'
+        azureSubscription: 'Azure subscription 1 (ed9928c5-6223-4495-a9e5-934311a53ea4)'
+        appType: 'webAppContainer'
+        WebAppName: 'az-poc-app-api'
+        DockerNamespace: $(dockerNamespace)
+        DockerRepository: $(imageRepo)
+        DockerImageTag: $(imageTag)
