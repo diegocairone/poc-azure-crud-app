@@ -37,8 +37,7 @@ stages:
       inputs:
         command: build
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
-        tags: |
-          $(tag)
+        tags: 'diegocairone/poc-crud-app-az:h2'
     - task: Docker@2
       displayName: Push to DockerHub
       inputs:
@@ -53,4 +52,4 @@ stages:
         WebAppName: 'az-poc-app-api'
         DockerNamespace: 'diegocairone'
         DockerRepository: 'poc-crud-app-az'
-        DockerImageTag: '$(Build.BuildId)'
+        DockerImageTag: 'h2'
