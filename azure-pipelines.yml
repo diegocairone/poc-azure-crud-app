@@ -11,7 +11,7 @@ resources:
 variables:
   dockerNamespace: 'diegocairone'
 
-  imageRepo: 'diegocairone/poc-crud-app-az'
+  imageRepo: 'poc-crud-app-az'
   imageTag: 'h2'
   
   # The name of your Azure App Service
