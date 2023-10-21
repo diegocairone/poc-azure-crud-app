@@ -9,6 +9,8 @@ resources:
 - repo: self
 
 variables:
+  dockerNamespace: 'diegocairone'
+
   imageRepo: 'diegocairone/poc-crud-app-az'
   imageTag: 'h2'
   
@@ -35,14 +37,14 @@ stages:
       inputs:
         command: build
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
-        repository: $(imageRepo)
+        repository: '$(dockerNamespace)/$(imageRepo)'
         tags: $(imageTag)
 
     - task: Docker@2
       displayName: Push to DockerHub
       inputs:
         containerRegistry: 'my-dockerhub'
-        repository: $(imageRepo)
+        repository: '$(dockerNamespace)/$(imageRepo)'
         tags: $(imageTag)
         command: 'push'
         addPipelineData: false
@@ -54,6 +56,6 @@ stages:
         azureSubscription: 'Azure subscription 1 (ed9928c5-6223-4495-a9e5-934311a53ea4)'
         appType: 'webAppContainer'
         WebAppName: 'az-poc-app-api'
-        DockerNamespace: 'diegocairone'
-        DockerRepository: 'poc-crud-app-az'
+        DockerNamespace: $(dockerNamespace)
+        DockerRepository: $(imageRepo)
         DockerImageTag: $(imageTag)
