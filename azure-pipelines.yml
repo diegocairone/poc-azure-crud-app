@@ -26,6 +26,11 @@ stages:
     pool:
       vmImage: ubuntu-latest
     steps:
+    - task: Maven@3
+      displayName: 'Maven Package'
+      inputs:
+        mavenPomFile: 'pom.xml'
+
     - task: Docker@2
       displayName: Build an image
       inputs:
