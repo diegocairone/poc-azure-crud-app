@@ -9,7 +9,7 @@ resources:
 - repo: self
 
 variables:
-  group: pipeline-vars-gr
+  - group: pipeline-vars-gr
 
 stages:
 - stage: Build
