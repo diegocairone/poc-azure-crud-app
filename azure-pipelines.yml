@@ -9,13 +9,7 @@ resources:
 - repo: self
 
 variables:
-  dockerNamespace: 'diegocairone'
-
-  imageRepo: 'poc-crud-app-az'
-  imageTag: 'h2'
-  
-  # The name of your Azure App Service
-  azureAppService: az-poc-app-api
+  - group: pipeline-vars-gr
 
 stages:
 - stage: Build
