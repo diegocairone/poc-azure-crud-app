@@ -80,7 +80,7 @@
 				<version>2.9.0</version>
 			    <configuration>
 			        <!-- <subscriptionId> complete here </subscriptionId> -->
-			        <resourceGroup>poc-passwordless-app-mssql</resourceGroup>
+			        <resourceGroup>poc-passwordless-rg</resourceGroup>
 			        <appName>poc-passwordless-api</appName>
 			        <pricingTier>F1</pricingTier>
 			        <region>eastuS</region>
