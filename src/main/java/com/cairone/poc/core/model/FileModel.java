@@ -9,6 +9,10 @@ import java.util.UUID;
 @Builder
 public class FileModel {
 
-    private final UUID id;
+    private final long id;
     private final String originalFilename;
+
+    private final long sizeInBytes;
+
+    private final String contentType;
 }
