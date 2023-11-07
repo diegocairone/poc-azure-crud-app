@@ -49,7 +49,7 @@ stages:
         ConnectionType: 'AzureRM'
         azureSubscription: 'Azure subscription 1 (ed9928c5-6223-4495-a9e5-934311a53ea4)'
         appType: 'webAppContainer'
-        WebAppName: 'az-poc-app-api'
+        WebAppName: 'poc-passwordless-api'
         DockerNamespace: $(dockerNamespace)
         DockerRepository: $(imageRepo)
         DockerImageTag: $(imageTag)
