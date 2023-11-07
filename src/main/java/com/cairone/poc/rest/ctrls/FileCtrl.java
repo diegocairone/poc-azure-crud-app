@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 
 @RestController
 @RequiredArgsConstructor
@@ -35,17 +36,12 @@ public class FileCtrl implements FileResource {
         BufferedInputStream bis = fileService.findContentById(id)
                 .orElseThrow(() -> new RuntimeException(String.format("No content could be found for the ID %s", id)));
 
-        try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
-
-            IOUtils.copy(bis, baos);
-            baos.flush();
-            byte[] imageData = baos.toByteArray();
-
+        try (OutputStream os = response.getOutputStream()) {
             response.setContentType(file.getContentType());
             response.setHeader("Content-Disposition", String.format("inline; %s", file.getOriginalFilename()));
-            response.getOutputStream().write(imageData);
+            IOUtils.copy(bis, os);
+            os.flush();
             response.flushBuffer();
-
         } catch (IOException ex) {
             throw new RuntimeException(ex.getMessage(), ex);
         }
