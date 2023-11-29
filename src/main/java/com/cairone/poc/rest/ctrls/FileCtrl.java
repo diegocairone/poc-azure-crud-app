@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,6 +22,7 @@ public class FileCtrl implements FileResource {
 
     private final FileService fileService;
 
+    @PreAuthorize("hasAuthority('SCOPE_Files.Read')")
     @Override
     public ResponseEntity<FileModel> getMetadataById(Long id) {
         return fileService.findMetadataById(id).map(ResponseEntity::ok)
@@ -47,6 +49,7 @@ public class FileCtrl implements FileResource {
         }
     }
 
+    @PreAuthorize("hasAuthority('SCOPE_Files.Write')")
     @Override
     public ResponseEntity<FileModel> uploadFile(MultipartFile file) {
         String fileName = file.getOriginalFilename();

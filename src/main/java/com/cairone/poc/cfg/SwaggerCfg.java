@@ -47,7 +47,8 @@ public class SwaggerCfg {
                         .authorizationCode(new OAuthFlow()
                                 .authorizationUrl(authorizationUrl)
                                 .tokenUrl(tokenUrl)
-                                .scopes(new Scopes().addString("api://9e497156-6ecf-46d1-b577-9385c44fb3f2/Files.All", "Files full access"))
+                                .scopes(new Scopes().addString(
+                                        "api://9e497156-6ecf-46d1-b577-9385c44fb3f2/Files.All", "Files full access"))
                         )
                 );
     }
